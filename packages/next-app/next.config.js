@@ -12,7 +12,7 @@ if (disableExtraction) {
 
 const tamaguiPlugin = withTamagui({
   useReactNativeWebLite: true,
-  config: './tamagui.config.ts',
+  config: './tamagui.config.js',
   components: ['tamagui'],
   importsWhitelist: ['constants.js', 'colors.js'],
   logTimings: true,
