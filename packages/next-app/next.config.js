@@ -1,10 +1,9 @@
 //@ts-check
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const { withNx } = require('@nx/next');
+const { composePlugins, withNx } = require('@nx/next');
 const { withTamagui } = require('@tamagui/next-plugin');
 
-process.env.TAMAGUI_TARGET = 'web';
 const disableExtraction = process.env.NODE_ENV === 'development';
 if (disableExtraction) {
   console.log('Disabling static extraction in development mode for better HMR');
@@ -12,7 +11,7 @@ if (disableExtraction) {
 
 const tamaguiPlugin = withTamagui({
   useReactNativeWebLite: true,
-  config: './tamagui.config.js',
+  config: './packages/next-app/tamagui.config.js',
   components: ['tamagui'],
   importsWhitelist: ['constants.js', 'colors.js'],
   logTimings: true,
@@ -23,19 +22,21 @@ const tamaguiPlugin = withTamagui({
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
  **/
 const nextConfig = {
+  nx: {
+    // Set this to true if you would like to to use SVGR
+    // See: https://github.com/gregberge/svgr
+    svgr: false,
+  },
+
   experimental: {
     appDir: true,
   },
 };
 
-module.exports = tamaguiPlugin({
-  ...nextConfig,
-  ...withNx({
-    ...nextConfig,
-    nx: {
-      // Set this to true if you would like to to use SVGR
-      // See: https://github.com/gregberge/svgr
-      svgr: false,
-    },
-  }),
-});
+const plugins = [
+  // Add more Next.js plugins to this list if needed.
+  withNx,
+  tamaguiPlugin,
+];
+
+module.exports = composePlugins(...plugins)(nextConfig);

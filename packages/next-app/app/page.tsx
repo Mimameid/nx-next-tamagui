@@ -1,6 +1,7 @@
 'use client';
 
-import { Stack, Text } from 'tamagui';
+import { Stack, TamaguiProvider, Text } from 'tamagui';
+import config from '../tamagui.config';
 
 export default async function Index() {
   /*
@@ -8,5 +9,11 @@ export default async function Index() {
    *
    * Note: The corresponding styles are in the ./index.none file.
    */
-  return <Stack>{/* <Text>Hello</Text> */}</Stack>;
+  return (
+    <TamaguiProvider config={config}>
+      <Stack>
+        <Text>hello</Text>
+      </Stack>
+    </TamaguiProvider>
+  );
 }
