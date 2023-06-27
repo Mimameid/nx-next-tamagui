@@ -25,6 +25,7 @@ node_modules
 !.vscode/extensions.json
 
 # misc
+/.history
 /.sass-cache
 /connect.lock
 /coverage
@@ -37,3 +38,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Next.js
+.next
